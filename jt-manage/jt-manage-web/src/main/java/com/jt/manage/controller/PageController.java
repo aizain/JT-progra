@@ -13,4 +13,8 @@ public class PageController {
 	public String index(@PathVariable("pageName") String pageName) {
 		return pageName;
 	}
+	
+	public String excute() {
+		return "a";
+	}
 }
