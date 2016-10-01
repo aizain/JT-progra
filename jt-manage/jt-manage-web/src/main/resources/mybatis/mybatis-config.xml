@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//En"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<!-- 开启驼峰自动映射 -->
+		<setting name="mapUnderscoreToCameCase" value="true"/>
+		<!-- 二级缓存总开关 -->
+		<setting name="cacheEnabled" value="false"/>
+	</settings>
+	
+	<plugins>
+		<!-- 拦截器interceptor 目的：改sql语句 -->
+		<!-- 分页插件：com.github.pagehelper.PageHelper类所在包名 -->
+		<plugin interceptor="com.github.pagehelper.PageHelper">
+			<!-- 方言 通过方言识别是哪种数据库 -->
+			<property name="dialect" value="mysql"/>
+			<!-- 该参数默认为false -->
+			<!-- 设置为true时，使用RowBouns分页会进行count查询，查询数据总条数 -->
+			<property name="rowBoundsWithCount" value="true"/>
+		</plugin>
+		
+		<!-- 通用Mapper插件 -->
+		<plugin interceptor="com.github.abe1533.mapperhelper.MapperInterceptor">
+			<!-- 主键自增回写方法，默认值MYSQL，详细说明请看文档 -->
+			<property name="IDENTITY" value="MYSQL"/>
+			<!-- 通用Mapper接口，多个通用接口用逗号隔开 -->
+			<property name="mappers" value="com.jt.manage.mapper.base.mapper.SysMapper"/>
+		</plugin>
+		
+	</plugins>
+
+</configuration>

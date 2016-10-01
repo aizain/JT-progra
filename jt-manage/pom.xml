@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.jt.manage</groupId>
+  <artifactId>jt-manage</artifactId>
+  <packaging>pom</packaging>
+
+  <name>jt-manage</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+  </dependencies>
+  <parent>
+  	<groupId>com.jt.parent</groupId>
+  	<artifactId>jt-parent</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <modules>
+  	<module>jt-manage-pojo</module>
+    <module>jt-manage-service</module>
+    <module>jt-manage-mapper</module>
+    <module>jt-manage-web</module>
+  </modules>
+</project>
