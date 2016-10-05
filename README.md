@@ -4,7 +4,16 @@
 15年12月 视频
 
 正在跟视频更新源码中。。。
-
+跑项目目前请用maven来跑，
+配置位置：
+eclipse-->Run-->Run Configurations...-->Maven Build
+中新建一个Maven Build
+Main页签：
+Base directory 选中jt-manage-web工程
+Goals 填写 tomcat7:run
+Source页签：
+Add 加入全部工程
+其他一般都用默认的，jre用自己的
 
 1.京淘架构
 
