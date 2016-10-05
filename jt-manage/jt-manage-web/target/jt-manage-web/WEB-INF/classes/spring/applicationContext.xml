@@ -15,9 +15,9 @@
 	<!-- 使用spring自带的占位符替换功能，可以实现注解方式获取属性文件中的配置值 -->
 	<bean class="com.jt.common.spring.exetend.ExtendedPropertyPlaceholderConfigurer">
 		<!-- 允许JVM参数覆盖 -->
-		<property name="systemPropertiesName" value="SYSTEM_PROPERIES_MODE_OVERRIDE"/>
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
 		<!-- 忽略没有找到的资源文件 -->
-		<property name="fgnoreResourceNotFound" value="true"/>
+		<property name="ignoreResourceNotFound" value="true"/>
 		<!-- 配置资源文件 -->
 		<property name="locations">
 			<list>
@@ -34,7 +34,7 @@
 		<!-- 数据库驱动 -->
 		<property name="driverClass" value="${jdbc.driver}"/>
 		<!-- 相应驱动的jdbcUrl -->
-		<property name="driverUrl" value="${jdbc.url}"/>
+		<property name="jdbcUrl" value="${jdbc.url}"/>
 		<!-- 数据库的用户名 -->
 		<property name="username" value="${jdbc.username}"/>
 		<!-- 数据库的密码 -->
@@ -47,7 +47,7 @@
 		<!-- 每个分区最大的连接数 -->
 		<property name="maxConnectionsPerPartition" value="150"/>
 		<!-- 每个分区最小的连接数 -->
-		<property name="minConnectionPerPartition" value="5"/>
+		<property name="minConnectionsPerPartition" value="5"/>
 	</bean>
 
 </beans>

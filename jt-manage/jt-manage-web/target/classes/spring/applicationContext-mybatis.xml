@@ -21,8 +21,8 @@
 		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
 		<!-- 别名包 自动给该包下内容起别名 -->
 		<property name="typeAliasesPackage" value="com.jt.manage.pojo"/>
-		<!-- 扫描所有的映射文件 mapper.xml 
-		<property name="mapperLocations" value="claccpath:mybatis/mappers/*.xml"/>-->
+		<!-- 扫描所有的映射文件 mapper.xml -->
+		<property name="mapperLocations" value="classpath:mybatis/mappers/*.xml"/>
 	</bean>
 
 	<!-- 定义Mapper接口扫描器 通用Mapper处理单表简单CRUD 插件提供的扫描 -->

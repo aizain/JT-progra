@@ -6,11 +6,14 @@
 	
 	<display-name>jt-manage</display-name>
 	
-	<!-- Spring的ApplicationContext 载入 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:spring/applicationContext*.xml</param-value>
 	</context-param>
+	<!-- Spring的ApplicationContext 载入 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	
 	<!-- 编码过滤器，以UTF8编码 -->
 	<filter>
@@ -33,7 +36,7 @@
 		<!-- 指定SpringMVC配置文件 -->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:spring/springmvc-congfig.xml</param-value>
+			<param-value>classpath:spring/springmvc-congfig.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>

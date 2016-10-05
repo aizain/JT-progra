@@ -3,6 +3,7 @@
 	<name>jt-common</name>
 	<comment></comment>
 	<projects>
+		<project>jt-manage-pojo</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

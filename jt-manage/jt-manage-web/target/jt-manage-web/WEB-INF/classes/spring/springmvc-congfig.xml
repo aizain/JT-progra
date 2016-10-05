@@ -17,7 +17,7 @@
 	<mvc:annotation-driven/>
 	
 	<!-- 配置扫描器，使得@Controller注解生效 -->
-	<context:component-scan base-package="com.jt.controller"/>
+	<context:component-scan base-package="com.jt.manage.controller"/>
 	
 	<!-- 定义视图解析器 -->
 	<!-- prefix="/WEB-INF/jsp/", suffix=".jsp", viewname="test" -> "/WEB-INF/jsp/test.jsp -->
