@@ -1,35 +1,36 @@
 package com.jt.manage.pojo;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * 商品类别实体
+ * 
+ * @author zain
+ * 16/10/05
+ */
 @Table(name="tb_item_cat") //表映射
-public class ItemCat {
+public class ItemCat extends BasePojo {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	private Long id; //商品类别id
 	
-	private String name;
+	private String name; //商品类别名称
 	
 	@Column(name="parent_id")
-	private Long parentId; //自关联
+	private Long parentId; //商品父类别id 自关联
 	
-	private Integer status;
+	private Integer status; //商品类别状态 默认值为1 可选值: 1正常 2删除
 	
 	@Column(name="sort_order")
-	private Integer sortOrder;
+	private Integer sortOrder; //排序号
 	
 	// 数据库会自动转换 1(非0):true 0:false
 	@Column(name="is_parent")
-	private Boolean isParent;
-	private Date created;
-	private Date updated;
-	
+	private Boolean isParent; //是否为父节点
 	
 	public Long getParentId() {
 		return parentId;
@@ -66,18 +67,6 @@ public class ItemCat {
 	}
 	public void setIsParent(Boolean isParent) {
 		this.isParent = isParent;
-	}
-	public Date getCreated() {
-		return created;
-	}
-	public void setCreated(Date created) {
-		this.created = created;
-	}
-	public Date getUpdated() {
-		return updated;
-	}
-	public void setUpdated(Date updated) {
-		this.updated = updated;
 	}
 	
 	//为 easyui tree 准备数据 

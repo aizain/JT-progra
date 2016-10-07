@@ -46,7 +46,7 @@ public class SysResult {
 	}
 	
 	public static SysResult ok() {
-		return new SysResult(200, "OK");
+		return new SysResult(null);
 	}
 	
 	public static SysResult build(Integer status, String msg) {

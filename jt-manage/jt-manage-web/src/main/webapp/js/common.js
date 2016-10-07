@@ -22,7 +22,7 @@ Date.prototype.format = function(format) {
 
 
 $(function() {
-	$(".tree-node").click(initItemCat);
+	//$(".tree-node").click(initItemCat);
 	
 });
 

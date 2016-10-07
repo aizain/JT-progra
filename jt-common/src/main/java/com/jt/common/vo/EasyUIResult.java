@@ -1,0 +1,50 @@
+package com.jt.common.vo;
+
+import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+/**
+ * easyui-grid 表格响应实体
+ * 
+ * @author zain
+ * 16/10/07
+ */
+public class EasyUIResult {
+
+	//定义jackson对象
+	private static final ObjectMapper MAPPER = new ObjectMapper();
+	
+	private Integer total; //总记录数
+	private List<?> rows;  //当前页的集合
+	
+	public EasyUIResult(){}
+	
+	public EasyUIResult(Integer total, List<?> rows) {
+	    this.total = total;
+	    this.rows = rows;
+	}
+	
+	public EasyUIResult(Long total, List<?> rows) {
+        this.total = total.intValue();
+        this.rows = rows;
+    }
+
+	
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
+    public List<?> getRows() {
+        return rows;
+    }
+
+    public void setRows(List<?> rows) {
+        this.rows = rows;
+    }
+	
+}
