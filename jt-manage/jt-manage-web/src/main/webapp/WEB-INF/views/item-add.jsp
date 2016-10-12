@@ -79,14 +79,14 @@
 <script type="text/javascript">
 	var itemAddEditor;
 	$(function() {
-	    /*itemAddEditor = KindEditorUtil.createEditor("#itemAddForm [name=desc]");
+	    //itemAddEditor = KindEditorUtil.createEditor("#itemAddForm [name=desc]");
 		KindEditorUtil.init({
 			fun : function(node) {
-				KindEditorUtil.changeItemParam(node, "itemAddForm");
+			    KindEditorUtil.changeItemParam(node, "itemAddForm");
 			}
-		});*/
+		});
 		
-		initItemCat();
+		//initItemCat();
 		
 	});
 	
@@ -107,9 +107,17 @@
 		if(priceView != "" || priceView != null || priceView != undefined) {
 			var prices = priceView.split(".");
 			var price = "";
-			for(var i in prices) {
-				price += prices[i];
+			if(prices.length == 2) {
+				price += prices[0];
+				price += prices[1];
+			} 
+			if(prices.length == 1) {
+			    price += prices[0];
+			} 
+			if(prices.length == 0) {
+			    price += "00";
 			}
+				
 			$("#itemAddForm [name=price]").val(price);
 		} else {
 			alert("金额有误！");
@@ -138,9 +146,6 @@
 		paramJson = JSON.stringify(paramJson); //将对象化为json字符串
 		
 		$("#itemAddForm [name=itemParams]").val(paramJson);
-		
-		console.log(paramJson);
-		console.log($("#itemAddForm").serialize());
 		
 		$.post("/item/save", $("#itemAddForm").serialize(), function(data) {
 			if(data.status == 200) {

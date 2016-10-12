@@ -28,6 +28,13 @@ public class Item extends BasePojo {
     private Long cid; //所属分类（商品类别）
     private Integer status; //状态 默认值为1，可选值： 1正常，2下架，3删除
     
+    
+    @Override
+    public String toString() {
+        return "Item [id=" + id + ", title=" + title + ", sellPoint=" + sellPoint + ", price=" + price + ", num=" + num
+                + ", barcode=" + barcode + ", image=" + image + ", cid=" + cid + ", status=" + status + "]";
+    }
+    
     public Long getId() {
         return id;
     }
@@ -43,7 +50,7 @@ public class Item extends BasePojo {
     public String getSellPoint() {
         return sellPoint;
     }
-    public void setSellPpoint(String sellPoint) {
+    public void setSellPoint(String sellPoint) {
         this.sellPoint = sellPoint;
     }
     public Integer getPrice() {

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
+import com.jt.common.vo.SysResult;
 import com.jt.manage.mapper.ItemMapper;
 import com.jt.manage.pojo.Item;
 
@@ -28,6 +29,8 @@ public class ItemService {
         item.setUpdated(new Date());
         item.setCreated(new Date());
         itemMapper.insert(item);
+        
+        System.out.println(item);
     }
 
     public List<Item> queryList(Integer page, Integer rows) {
@@ -36,6 +39,11 @@ public class ItemService {
         //List<Item> items = itemMapper.select(null); 
         List<Item> items = itemMapper.queryItem();
         return items;
+    }
+
+    public SysResult update(Item item) {
+        itemMapper.updateByPrimaryKeySelective(item);
+        return SysResult.ok();
     }
     
 }

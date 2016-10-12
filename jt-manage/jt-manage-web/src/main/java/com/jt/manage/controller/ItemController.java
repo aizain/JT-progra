@@ -2,6 +2,8 @@ package com.jt.manage.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,9 +32,8 @@ public class ItemController extends BaseController {
     //商品新增方法
     @RequestMapping("/save")
     @ResponseBody
-    public SysResult save(Item item) {
+    public SysResult save(Item item, HttpServletRequest re) {
         itemService.save(item);
-        
         return SysResult.ok();
     }
     
@@ -46,4 +47,12 @@ public class ItemController extends BaseController {
         
         return new EasyUIResult(pageInfo.getTotal(), items);
     }
+    
+    //商品修改
+    @RequestMapping("/update")
+    @ResponseBody
+    public SysResult update(Item item) {
+        return itemService.update(item);
+    }
+    
 }
