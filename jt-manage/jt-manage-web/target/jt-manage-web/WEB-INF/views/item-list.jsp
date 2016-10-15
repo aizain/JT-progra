@@ -65,15 +65,15 @@
 	            	data.priceView = KindEditorUtil.formatPrice(data.price);
 	            	$("#itemEditForm").form("load", data);
 	            	
-	            	//加载商品
+	            	//加载商品 RESTFul
 	            	$.getJSON("/item/query/item/desc/" + data.id, function(_data) {
 	            	    if(_data.status == 200) {
-	            	        //itemEditEditor.html(_data.data.itemDesc);
+	            	        itemEditEditor.html(_data.data.itemDesc);
 	            	    }
 	            	});
 	            	
 	            	//加载商品规格
-	            	$.getJSON("/item/param/item/query" + data.id, function(_data) {
+	            	$.getJSON("/item/param/item/query/" + data.id, function(_data) {
 	            	    if(_data && _data.status == 200 && _data.data && _data.data.paramData) {
 	            	        $("#itemEditForm .params").show();
 	            	        $("#itemEditForm [name=itemParams]").val(_data.data.paramData);
@@ -117,10 +117,31 @@
 	        handler : function() {
 	            var ids = getSelectionsIds();
 	            if(ids.length == 0) {
+	                alert("未选中商品！");
 	                return;
 	            }
-	        }
+	            //$.messager.confirm("确认", "确定删除ID为" + ids + "的商品吗？", function(r) {
+	                if(true) {
+	                    var params = {"ids" : ids};
+	                    $.post("/item/delete", params, function(data) {
+	                        if(200 == data.status) {
+	                          	//$.message.alert("提示", "删除商品成功！", undefined, function() {
+		                        //});
+		                        alert("删除商品成功！");
+		                        $("#itemList").datagrid("reload");
+	                        }
+	                    });
+	                } // if over
+	            //}); 
+	        } // handler over
+		
 	    
+	}, "-", {
+	    text : "下架",
+	    iconCls : "icon-remove",
+	    handler : function() {
+	        
+	    }
 	}];
 	
 	

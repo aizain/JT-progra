@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <div style="padding:10px">
 	<form id="itemEditForm" class="itemForm" method="post">
+        <input type="hidden" name="id"/>
 		<table cellpadding="5">
 			<tbody>
 				<tr>
@@ -55,7 +56,7 @@
 					<td>商品描述：</td>
 					<td>
 						<textarea style="width:800px;height:300px;visibility:hidden;" name="desc"></textarea>
-					</td>
+                    </td>
 				</tr>
 				<tr class="params hide">
 					<td>商品规格：</td>
@@ -78,7 +79,7 @@
 	
 	$(function() {
 	    //实例化编辑器
-	    //itemEditEditor = KindEditorUtil.createEditor("#itemEditForm [name=desc]");
+	    itemEditEditor = KindEditorUtil.createEditor("#itemEditForm [name=desc]");
 	});
 	
 	function submitForm() {
@@ -87,8 +88,28 @@
 	        alert("表单还未填写完成！");
 	        return;
 	    }
-	    $("#itemEditForm [name=price]").val(eval($("#itemEditForm [name=priceView]")));
-	    //itemEditEditor.sync();
+	  	//转化价格单位，将元转化为分
+		//此处有浮点数计算问题 处理 zain 16/10/07
+		var priceView = $("#itemEditForm [name=priceView]").val();
+		if(priceView != "" || priceView != null || priceView != undefined) {
+			var prices = priceView.split(".");
+			var price = "";
+			if(prices.length == 2) {
+				price += prices[0];
+				price += prices[1];
+			} 
+			if(prices.length == 1) {
+			    price += prices[0];
+			} 
+			if(prices.length == 0) {
+			    price += "00";
+			}
+				
+			$("#itemEditForm [name=price]").val(price);
+		} else {
+			alert("金额有误！");
+		}
+	    itemEditEditor.sync();
 	    
 	    var paramJson = [];
 	    $("#itemEditForm .param li").each(function(i, e) {
@@ -111,7 +132,7 @@
 	    
 	    $("#itemEditForm [name=itemParams]").val(paramJson);
 	    
-	    $.post("/item/update", $("#itemEditForm").serialize(), function() {
+	    $.post("/item/update", $("#itemEditForm").serialize(), function(data) {
 	        if(data.status == 200) {
 	            alert("修改商品成功");
 	            //$.message.alert("提示", "修改商品成功", "info", function() {

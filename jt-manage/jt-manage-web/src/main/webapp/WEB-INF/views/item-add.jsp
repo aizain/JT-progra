@@ -79,15 +79,12 @@
 <script type="text/javascript">
 	var itemAddEditor;
 	$(function() {
-	    //itemAddEditor = KindEditorUtil.createEditor("#itemAddForm [name=desc]");
+	    itemAddEditor = KindEditorUtil.createEditor("#itemAddForm [name=desc]");
 		KindEditorUtil.init({
 			fun : function(node) {
 			    KindEditorUtil.changeItemParam(node, "itemAddForm");
 			}
 		});
-		
-		//initItemCat();
-		
 	});
 	
 	function submitForm() {
@@ -123,8 +120,7 @@
 			alert("金额有误！");
 		}
 		
-		//itemAddEditor.sync(); //将输入的内容同步到多行文本中
-		
+		itemAddEditor.sync(); //将输入的内容同步到多行文本中
 		
 		var paramJson = [];
 		$("#itemAddForm .param li").each(function(i, e) {
@@ -157,6 +153,6 @@
 
 	function clearForm() {
 		$("#itemAddForm").form("reset");
-		//itemAddEditor.html("");
+		itemAddEditor.html("");
 	}
 </script>

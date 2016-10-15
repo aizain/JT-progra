@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<script type="text/javascript" charset="utf-8" src="/js/kindeditor-4.1.7/kindeditor-all-min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/kindeditor-4.1.7/lang/zh_CN.js"></script>
+    
 <div style="padding:10px">
 	<form id="itemEditForm" class="itemForm" method="post">
         <input type="hidden" name="id"/>
@@ -56,7 +59,7 @@
 					<td>商品描述：</td>
 					<td>
 						<textarea style="width:800px;height:300px;visibility:hidden;" name="desc"></textarea>
-					</td>
+                    </td>
 				</tr>
 				<tr class="params hide">
 					<td>商品规格：</td>
@@ -79,7 +82,7 @@
 	
 	$(function() {
 	    //实例化编辑器
-	    //itemEditEditor = KindEditorUtil.createEditor("#itemEditForm [name=desc]");
+	    itemEditEditor = KindEditorUtil.createEditor("#itemEditForm [name=desc]");
 	});
 	
 	function submitForm() {
@@ -109,7 +112,7 @@
 		} else {
 			alert("金额有误！");
 		}
-	    //itemEditEditor.sync();
+	    itemEditEditor.sync();
 	    
 	    var paramJson = [];
 	    $("#itemEditForm .param li").each(function(i, e) {

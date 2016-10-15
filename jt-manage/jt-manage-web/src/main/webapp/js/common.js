@@ -67,8 +67,40 @@ var TT = KindEditorUtil = {    //相当于java中定义的工具类，里面提�
         
         //初始化图片上传组件
         initPicUpload : function(data) {
-            
-        },
+            $(".picFileUpload").each(function(i, e) {
+                var _ele = $(e);
+                _ele.siblings("div.pices").remove();
+                _ele.after("\<div class='pics'>\<ul></ul>\</div>");
+                
+                //回显图片
+                if(data && data.pics) {
+                    var imgs = data.pics.split(",");
+                    for(var i in imgs) {
+                        if($.trim(imgs[i]).length > 0) {
+                            _ele.siblings(".pics").find("ul").append("<li><a href='" + imgs[i] + "' target='_blank'><img src='" + imgs[i] + "' width='80' height='50'></a></li>");
+                        }
+                    }
+                } // if over
+                $(e).click(function() {
+                    var form = $(this).parentsUntil("form").parent("form");
+                    KindEditor.editor(TT.kingEditorParams).loadPlugin("multiimage", function() {
+                        var editor = this;
+                        editor.plugin.multiImageDialog({
+                            clickFn : function(urlList) {
+                                var imgArray = [];
+                                KindEditor.each(urlList, function(i, data) {
+                                    imgArray.push(data.url);
+                                    form.find(".pics ul").append("<li><a href='" + data.url + "' target='_blank'><img src='" + data.url + "' width='80' height='50'></a></li>");
+                                });
+                                //利用KindEditor弹出文件选择框，拿到本地图片路径，将它们拼接起来
+                                form.find("[name=image]").val(imgArray.join(","));
+                                editor.hideDialog();
+                            }
+                        }); 
+                    }); // KindEditor.editor over
+                }); // $(e).click over
+            }); // $(".picFileUpload").each over
+        }, // initPicUpload over
         
         //初始化商品类目
         initItemCat : function(data) {
@@ -112,7 +144,49 @@ var TT = KindEditorUtil = {    //相当于java中定义的工具类，里面提�
                     }).window("open"); // window over
                 }); // click over
             }); // each over
-        } //initItemCat over
+        }, // initItemCat over
+        
+        /**
+         * 创建富文本编辑框
+         */
+        createEditor : function(select) {
+            return KindEditor.create(select, TT.kingEditorParams);
+        }, // createEditor over
+        
+        /**
+         * 创建一个窗口，关闭窗口后销毁该窗口对象。<br/>
+         * 
+         * 默认: <br/>
+         * width : 80% <br/>
+         * height : 80% <br/>
+         * title : (空字符串) <br/>
+         * 
+         * 参数: <br/>
+         * width : <br/>
+         * height : <br/>
+         * title : <br/>
+         * url : 必填参数 <br/>
+         * onLoad : function 加载完窗口后执行 <br/>
+         * 
+         */
+        createWindow : function(params) {
+            $("<div>").css({padding : "5px"}).window({
+                width : params.width ? params.windth : "80%",
+                height : params.height ? params.height : "80%",
+                modal : true,
+                href : function() {
+                    $(this).window("destroy");
+                },
+                onLoad : function() {
+                    if(params.onLoad) {
+                        params.onLoad.call(this);
+                    }
+                }
+                
+            }).window("open");
+        }, // createWindow over
+        
+        
 } // KindEditorUtil over
 
 
