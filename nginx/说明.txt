@@ -1,0 +1,9 @@
+请勿双击nginx.exe
+
+启动cmd 输入 
+start nginx.exe 启动
+nginx.exe -s stop 停止
+nginx.exe -s reload 停止
+
+修改后可直接域名访问
+manage.jt.com/page/index
