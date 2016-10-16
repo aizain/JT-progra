@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<script type="text/javascript" charset="utf-8" src="/js/kindeditor-4.1.7/kindeditor-all-min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/kindeditor-4.1.7/lang/zh_CN.js"></script>
+    
 <div style="padding:10px">
 	<form id="itemEditForm" class="itemForm" method="post">
         <input type="hidden" name="id"/>
@@ -112,12 +115,12 @@
 	    itemEditEditor.sync();
 	    
 	    var paramJson = [];
-	    $("#itemEditForm .param li").each(function(i, e) {
+	    $("#itemEditForm .params li").each(function(i, e) {
 	        var trs = $(e).find("tr");
 	        var group = trs.eq(0).text();
 	        var ps = [];
 	        for(var i=1; i<trs.length; i++) {
-	            var tr = trs.eq(0);
+	            var tr = trs.eq(i);
 	            ps.push({
 	                "k" : $.trim(tr.find("td").eq(0).find("span").text()),
 	                "v" : $.trim(tr.find("input").val())

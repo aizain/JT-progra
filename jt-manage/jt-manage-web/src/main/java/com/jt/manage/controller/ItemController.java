@@ -34,8 +34,8 @@ public class ItemController extends BaseController {
     //商品新增方法
     @RequestMapping("/save")
     @ResponseBody
-    public SysResult save(Item item, String desc) {
-        itemService.save(item, desc);
+    public SysResult save(Item item, String desc, String itemParams) {
+        itemService.save(item, desc, itemParams);
         return SysResult.ok();
     }
     
@@ -53,8 +53,8 @@ public class ItemController extends BaseController {
     //商品修改
     @RequestMapping("/update")
     @ResponseBody
-    public SysResult update(Item item, String desc) {
-        return itemService.update(item, desc);
+    public SysResult update(Item item, String desc, Long itemParamId, String itemParams) {
+        return itemService.update(item, desc,itemParamId, itemParams);
     }
     
     //批量删除

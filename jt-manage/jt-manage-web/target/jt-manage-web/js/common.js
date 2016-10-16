@@ -174,7 +174,8 @@ var TT = KindEditorUtil = {    //相当于java中定义的工具类，里面提�
                 width : params.width ? params.windth : "80%",
                 height : params.height ? params.height : "80%",
                 modal : true,
-                href : function() {
+                href : params.url,
+                onClose : function() {
                     $(this).window("destroy");
                 },
                 onLoad : function() {
@@ -186,6 +187,39 @@ var TT = KindEditorUtil = {    //相当于java中定义的工具类，里面提�
             }).window("open");
         }, // createWindow over
         
+        closeCurrentWindow : function() {
+            $(".panel-tool-close").click();
+        },
+        
+        //切换商品规格页面
+        changeItemParam : function(node, formId) {
+            $.getJSON("/item/param/query/itemcatid/" + node.id, function(data) {
+                if(200 == data.status && data.data) {
+                    $("#" + formId + " .params").show();
+                    console.log(data.data.paramData);
+                    var paramData = JSON.parse(data.data.paramData);
+                    var html = "<ul>";
+                    for(var i in paramData) {
+                        var pd = paramData[i];
+                        html += "<li><table>";
+                        html += "<tr><td colspan=\"2\" class=\"group\">" + pd.group + "</td></tr>";
+                        
+                        for(var j in pd.params) {
+                            var ps = pd.params[j];
+                            html += "<tr><td class=\"param\"><span>" + ps + "</span>: </td>"
+                                       +"<td><input autocomplete=\"off\" type=\"text\"/></td></tr>";
+                        }
+                        
+                        html += "</li></table>";
+                    }
+                    html += "<ul>";
+                    $("#" + formId + " .params td").eq(1).html(html);
+                } else {
+                    $("#" + formId + " .params").hide();
+                    $("#" + formId + " .params").eq(1).empty();
+                }
+            }); // $.getJSON over
+        }, // changeItemParam over
         
 } // KindEditorUtil over
 

@@ -79,6 +79,7 @@
 <script type="text/javascript">
 	var itemAddEditor;
 	$(function() {
+	    //和form下的desc组件绑定
 	    itemAddEditor = KindEditorUtil.createEditor("#itemAddForm [name=desc]");
 		KindEditorUtil.init({
 			fun : function(node) {
@@ -123,7 +124,7 @@
 		itemAddEditor.sync(); //将输入的内容同步到多行文本中
 		
 		var paramJson = [];
-		$("#itemAddForm .param li").each(function(i, e) {
+		$("#itemAddForm .params li").each(function(i, e) {
 			var trs = $(e).find("tr");
 			var group = trs.eq(0).text();
 			var ps = [];
@@ -136,7 +137,7 @@
 			}
 			paramJson.push({
 				"group" : group,
-				"param" : ps
+				"params" : ps
 			});
 		});
 		paramJson = JSON.stringify(paramJson); //将对象化为json字符串

@@ -86,11 +86,12 @@
 	            	        for(var i in paramData) {
 	            	            var pd = paramData[i];
 	            	            html += "<li><table>";
-	            	            html += "<tr><td colspan=\"2\" class=\"group\">" + pd.group;
+	            	            html += "<tr><td colspan=\"2\" class=\"group\">" + pd.group + "</td></tr>";
 	            	            
 	            	            for(var j in pd.params) {
 	            	                var ps = pd.params[j];
-	            	                html += "<tr><td class=\"param\"><span>" + ps.k + "</span>";
+	            	                html += "<tr><td class=\"param\"><span>" + ps.k + "</span>: </td>"
+	            	                		  + "<td><input autocomplete=\"off\" type=\"text\" value='" + ps.v + "'/></td></tr>";
 	            	            } 
 	            	            
 	            	            html += "</li></table>";

@@ -10,8 +10,10 @@ import com.github.pagehelper.PageHelper;
 import com.jt.common.vo.SysResult;
 import com.jt.manage.mapper.ItemDescMapper;
 import com.jt.manage.mapper.ItemMapper;
+import com.jt.manage.mapper.ItemParamItemMapper;
 import com.jt.manage.pojo.Item;
 import com.jt.manage.pojo.ItemDesc;
+import com.jt.manage.pojo.ItemParamItem;
 
 /**
  * 商品service层
@@ -26,14 +28,18 @@ public class ItemService {
     private ItemMapper itemMapper;
     @Autowired
     private ItemDescMapper itemDescMapper;
+    @Autowired
+    private ItemParamItemMapper itemParamItemMapper;
     
     /**
      * 保存一条数据
      * 状态、创建/修改时间有默认值
      * 
      * @param item
+     * @param desc
+     * @param itemParams 
      */
-    public void save(Item item, String desc) {
+    public void save(Item item, String desc, String itemParams) {
         //设置默认值：状态 默认值为1，可选值： 1正常，2下架，3删除
         item.setStatus(1);
         item.setUpdated(new Date());
@@ -50,6 +56,14 @@ public class ItemService {
         itemDesc.setUpdated(item.getUpdated());
         itemDesc.setCreated(item.getCreated());
         itemDescMapper.insert(itemDesc);
+        
+        //保存商品规格模版参数
+        ItemParamItem itemParamItem = new ItemParamItem();
+        itemParamItem.setItemId(item.getId());
+        itemParamItem.setParamData(itemParams);
+        itemParamItem.setUpdated(item.getUpdated());
+        itemParamItem.setCreated(item.getCreated());
+        itemParamItemMapper.insert(itemParamItem);
     }
 
     /**
@@ -75,26 +89,46 @@ public class ItemService {
      * 
      * @param item
      * @param desc 
+     * @param itemParamId 
+     * @param itemParams 
      * @return
      */
-    public SysResult update(Item item, String desc) {
+    public SysResult update(Item item, String desc, Long itemParamId, String itemParams) {
         itemMapper.updateByPrimaryKeySelective(item);
         
         ItemDesc itemDesc = itemDescMapper.selectByPrimaryKey(item.getId());
         itemDesc.setItemDesc(desc);
+        itemDesc.setUpdated(new Date());
         itemDescMapper.updateByPrimaryKeySelective(itemDesc);
+        
+        ItemParamItem itemParamItem = itemParamItemMapper.selectByPrimaryKey(itemParamId);
+        itemParamItem.setParamData(itemParams);
+        itemParamItem.setUpdated(itemDesc.getUpdated());
+        itemParamItemMapper.updateByPrimaryKeySelective(itemParamItem);
         
         return SysResult.ok();
     }
 
     /**
-     * 批量删除
-     * 根据ids
+     * 级联删除
      * 
      * @param ids
      */
     public SysResult delete(Long[] ids) {
+        //删除规格信息
+        for(Long itemId : ids) { // 此处因为简单做所以加循环，不建议这么做，可以自己写映射zain 16/10/16
+            ItemParamItem itemParamItem = new ItemParamItem();
+            itemParamItem.setItemId(itemId);
+            itemParamItemMapper.delete(itemParamItem);
+        }
+        
+        //删除商品描述
+        itemDescMapper.deleteByIDS(ids);
+        //删除多个商品
         itemMapper.deleteByIDS(ids);
+        
+        // TODO 删除图片，从商品中查询到它的所有的图片的链接 此处不再补全 zain 16/10/16
+        
         return SysResult.ok();
     }
 
