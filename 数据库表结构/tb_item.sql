@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50715
 File Encoding         : 65001
 
-Date: 2016-10-16 12:11:59
+Date: 2016-10-16 21:53:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,7 +35,7 @@ CREATE TABLE `tb_item` (
   KEY `cid` (`cid`),
   KEY `id` (`id`),
   CONSTRAINT `cid` FOREIGN KEY (`cid`) REFERENCES `tb_item_cat` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_item
@@ -50,7 +50,6 @@ INSERT INTO `tb_item` VALUES ('8', null, null, null, null, null, null, null, '1'
 INSERT INTO `tb_item` VALUES ('9', null, null, null, null, null, null, null, '1', '2016-10-07 12:15:39', '2016-10-07 12:15:39');
 INSERT INTO `tb_item` VALUES ('10', null, null, null, null, null, null, null, '1', '2016-10-07 12:19:09', '2016-10-07 12:19:09');
 INSERT INTO `tb_item` VALUES ('11', null, null, null, null, null, null, null, '1', '2016-10-07 12:40:15', '2016-10-07 12:40:15');
-INSERT INTO `tb_item` VALUES ('12', '', null, '1111100', null, '', '', null, '1', '2016-10-07 12:41:43', '2016-10-07 12:41:43');
 INSERT INTO `tb_item` VALUES ('13', '', null, '100', null, '', '', null, '1', '2016-10-07 12:42:11', '2016-10-07 12:42:11');
 INSERT INTO `tb_item` VALUES ('14', '1', null, '1', '1', '', '', null, '1', '2016-10-07 13:06:48', '2016-10-07 13:06:48');
 INSERT INTO `tb_item` VALUES ('15', '121', null, '123', '13', '', '', null, '1', '2016-10-07 13:08:47', '2016-10-07 13:08:47');
@@ -84,3 +83,6 @@ INSERT INTO `tb_item` VALUES ('58', '1112123', 'ddsa爱爱爱cads', '121222', '9
 INSERT INTO `tb_item` VALUES ('59', '2e2e', 'dasdada', '21301', '21313', '132312adda', '', '3', '1', '2016-10-12 21:38:55', '2016-10-12 21:38:55');
 INSERT INTO `tb_item` VALUES ('67', 'dasddadsd', 'adsdadasd', '11100', '111', 'asdsadasdasd', '', '1', '1', '2016-10-15 12:02:10', '2016-10-15 12:02:10');
 INSERT INTO `tb_item` VALUES ('68', 'dasda1212121', 'dadadasdasd', '212100', '21212', '', 'http://image.jt.com/images/116/9/6/1476539551611598.jpg', null, '1', '2016-10-15 21:54:16', '2016-10-15 21:54:16');
+INSERT INTO `tb_item` VALUES ('69', '13231aaa', 'aaaa', '1231200', '99999999', 'aaa', '', '6', '1', '2016-10-16 20:17:37', '2016-10-16 20:17:37');
+INSERT INTO `tb_item` VALUES ('72', 'sdads', 'dadsada', '121200', '12121', 'sdadas', '', '6', '1', '2016-10-16 20:47:41', '2016-10-16 20:47:41');
+INSERT INTO `tb_item` VALUES ('75', '主体', '主体', '11100', '111', '11', '', '6', '1', '2016-10-16 21:33:40', '2016-10-16 21:33:40');

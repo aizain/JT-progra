@@ -10,13 +10,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50715
 File Encoding         : 65001
 
-Date: 2016-10-05 18:52:46
+Date: 2016-10-16 21:53:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for tb_item_cat
+-- Table structure for `tb_item_cat`
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_item_cat`;
 CREATE TABLE `tb_item_cat` (
@@ -26,8 +26,8 @@ CREATE TABLE `tb_item_cat` (
   `status` int(1) DEFAULT '1' COMMENT '状态 默认值为1 可选值: 1正常 2删除',
   `sort_order` int(4) NOT NULL COMMENT '排序号',
   `is_parent` tinyint(1) DEFAULT NULL COMMENT '是否为父',
-  `created` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`),
   KEY `parent_id` (`parent_id`),
   KEY `sort_order` (`sort_order`)
@@ -73,4 +73,3 @@ INSERT INTO `tb_item_cat` VALUES ('68', '0', '汽车用品', '1', '8', '1', '201
 INSERT INTO `tb_item_cat` VALUES ('69', '0', '玩具乐器', '1', '9', '1', '2016-10-04 14:40:53', '2016-10-05 15:13:35');
 INSERT INTO `tb_item_cat` VALUES ('70', '0', '手机', '1', '10', '1', '2016-10-04 14:40:53', '2016-10-05 15:13:41');
 INSERT INTO `tb_item_cat` VALUES ('71', '0', '数码', '1', '11', '1', '2016-10-04 14:40:53', '2016-10-05 15:13:46');
-SET FOREIGN_KEY_CHECKS=1;
