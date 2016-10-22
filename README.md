@@ -48,6 +48,95 @@ mysql主从复制，读写分离
 
 
 ###第一天：
+
+####第一天草稿：
+1.创建一个父工程
+jt-parent，目标管理依赖
+pom.xml类型packaging修改为pom
+
+2.增加jar依赖，只是管理。
+首先加核心jar，
+其次数据源相关的，
+重点的技术，
+最后加外围不重要的
+
+3.创建工具类工程 jt-common
+
+4.创建后台工程
+jt-manage
+纵向拆分：
+pojo（JPA注解）
+mapper（接口）
+service
+controller
+
+聚合 jt-manage pom工程 继承jt-parent
+jt-manage-pojo 依赖 jt-common
+jt-manage-mapper 依赖 jt-pojo
+jt-manage-service 依赖 jt-pojo
+jt-manage-web 依赖 jt-service
+
+聚合工程：
+maven module
+
+通用Mapper（只支持单表）
+这个只处理单表，他会自动生成所有的文件，
+映射文件，sql语句，
+只需要在pojo上使用JTA注解。
+User.java
+
+@Table("user_c") //表名
+public class User
+@id //主键
+private String id
+@Column("user_name") //字段名
+private String username
+条件自己写
+
+通用mapper少 根据ID批量删除方法
+需要自行继承扩充
+
+
+需求：
+1）展现后台页面，easyui。
+直接访问一个路径，直接转向到某个页面
+http://localhost:8082/page/index
+访问WEB-INF/views/index.jsp
+
+
+controller分配新方式
+RESTFul方式
+/page/item-add/100
+这个就是参数
+以get请求实现post
+
+
+
+EasyUI界面布局：
+自己提供很多组件
+布局、树型、页夹、按钮
+局部刷新：ajax
+
+树形组件 异步加载
+带条件查询
+
+
+表设计特点：
+超大型项目特点
+分类表：（京东菜单）
+只有三类，大中小，用户体验好
+大—中—小 —商品列表
+
+1.主键 bigint
+2.常查询字段做索引
+3.关联关系作为普通字段，用代码来维护
+
+实现步骤
+1.pojo jpa
+2.接口文件
+
+
+####第一天总结：
 1）京淘电商，互联网电子商城，类似京东、淘宝大型电商网站。
 主要业务就包括：
 用户在商城浏览商品，看中的商品加入购物车，提交订单。
@@ -142,6 +231,250 @@ springmvc会自动将返回的java对象转换为json串。
 
 ###第二天：
 
+####第二天草稿：
+
+商品管理
+价格：
+java浮点数室友精度问题，bigDecimal可以处理，
+但是整型永远比浮点型计算快，金额： 9.99 <=> 999，
+在计算价格时非常快。
+图片：
+存地址，多个链接用分隔符分割
+
+商品新增：
+1）POJO文件 + JPA
+2）映射接口 ItemMapper
+3）创建 ItemService
+4）分析页面，得到 controller 访问地址，参数，返回值
+a） /item/save
+b）通过 jQuery.serialize 方法将表单中的所有的 html 控件值拼接，
+controller item 对象来接收数据
+c）返回参数对象中必须有一个status的属性。
+200 约定执行成功，构建SysResult对象
+5）创建 controller
+
+商品列表：
+easyui-datagrid 表格控件，自动带分页
+访问地址：/item/query
+参数：分页参数 
+easyui固定写死的分页参数
+page 当前页、rows 每页条数
+返回值：EasyUIResult 结构是为datagrid量身定制
+
+controller
+四种返回情况：
+1）直接逻辑名
+2）返回 java 对象，转为 json 串
+3）返回 SysResult 对象，增强页面提示。状态码提示成功/失败
+4）返回 EasyUIResult 对象，主要用于 datagrid 控件
+
+分页：
+引入分页工具类 PageHelper、PageInfo，
+原理：
+1）记录是在执行 SQL 前，被 mybatis 拦截器拦截，加入分页语句
+2）total 总记录数，在后台共执行2个 SQL 语句，count/select
+
+商品修改
+
+商品删除
+$.post("/item/delete", params, function(data)
+可以 id 接，可以 id[] 接
+
+商品描述
+大文本框，图文结构。
+大字段，为了加快处理速度，不能把它的信息直接放在商品表中
+设计了1对1的关联表，单独存放它的扩展的信息
+在页面中需要配合图文的控件，kindEditor富文本编辑器，
+利用它就可以直接输入图文的内容
+kindEditor工作原理，将页面上的一个 textarea 进行渲染，
+实际上是一个 iframe 。
+kindEditor控件在保存时，会将 iframe 内容形成一个 html 串，
+写入到 textarea 里
+
+SELECT MAX(id)+1 FROM tb_item
+有高并发问题，两个人拿到的id一样
+
+SELECT LAST_INSERT_ID()
+跟随在插入动作之后，拿到id
+mysql对该语句加锁，无高并发问题
+mybatis底层封装插入后返回id到插入对象中
+
+程序处理高并发，加锁
+
+Oracle序列
+
+
+图片上传
+KindEditor功能，
+分为一次只上传一张图片，一次可以上传多个图片，
+不能独立完成，必须配合后台类来实现，
+springmvc文件上传组件，
+单独发出ajax请求，独立进行图片保存，
+保存后将图片的链接返回
+
+本地图片路径转换：
+1.修复本地host文件
+通过修改下个文件中解析转换
+C:\Windows\System32\drivers\etc\host
+window在解析域名时，会先读取该文件看是否可解析
+在文件底部加入
+127.0.0.1 www.jt.com
+127.0.0.1 manage.jt.com
+127.0.0.1 image.jt.com
+127.0.0.1 sso.jt.com
+127.0.0.1 order.jt.com
+127.0.0.1 sso.jt.com
+127.0.0.1 solr.jt.com
+127.0.0.1 cart.jt.com
+127.0.0.1 search.jt.com
+
+2.SwitchHosts工具
+可通过工具转换，更方便
+有可能有BUG，需要每次检查下文件
+
+图片的nginix本地配置：
+解析域名后面的路径
+
+Nginx：
+高负载均衡的服务器
+是高性能的HTTP和反向代理服务器
+也是IMAP/POP3/SMTP代理服务器
+性能高：c语言 + linux epoll方式 
+支持 5w 个并发请求
+
+安装：
+安装直接解压即可，选择非中文目录
+在nginx/conf目录下
+修改 nginx.conf 配置文件
+在文件尾部加入
+
+	#后台服务器
+	server {
+		listen 80;
+		server_name manage.jt.com;
+		#charset koi8-r;
+		#access_log logs/host.access.log main;
+		
+		proxy_set_header X-Forwarded-Host $host;
+		proxy_set_header X-Forwarded-Server $host;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		
+		location / {
+			proxy_pass http://127.0.0.1:8081;
+			proxy_connect_timeout 600;
+			proxy_read_timeout 600;
+		}
+	}
+	
+	#前台服务器
+	server {
+		listen 80;
+		server_name www.jt.com;
+		#charset koi8-r;
+		#access_log logs/host.access.log main;
+		
+		proxy_set_header X-Forwarded-Host $host;
+		proxy_set_header X-Forwarded-Server $host;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		
+		location / {
+			proxy_pass http://127.0.0.1:8081;
+			proxy_connect_timeout 600;
+			proxy_read_timeout 600;
+		}
+	}
+	
+	#SSO服务器
+	server {
+		listen 80;
+		server_name sso.jt.com;
+		#charset koi8-r;
+		#access_log logs/host.access.log main;
+		
+		proxy_set_header X-Forwarded-Host $host;
+		proxy_set_header X-Forwarded-Server $host;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		
+		location / {
+			proxy_pass http://127.0.0.1:8081;
+			proxy_connect_timeout 600;
+			proxy_read_timeout 600;
+		}
+	}
+	
+	#购物车服务器
+	server {
+		listen 80;
+		server_name cart.jt.com;
+		#charset koi8-r;
+		#access_log logs/host.access.log main;
+		
+		proxy_set_header X-Forwarded-Host $host;
+		proxy_set_header X-Forwarded-Server $host;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		
+		location / {
+			proxy_pass http://127.0.0.1:8081;
+			proxy_connect_timeout 600;
+			proxy_read_timeout 600;
+		}
+	}
+	
+	#订单服务器
+	server {
+		listen 80;
+		server_name order.jt.com;
+		#charset koi8-r;
+		#access_log logs/host.access.log main;
+		
+		proxy_set_header X-Forwarded-Host $host;
+		proxy_set_header X-Forwarded-Server $host;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		
+		location / {
+			proxy_pass http://127.0.0.1:8081;
+			proxy_connect_timeout 600;
+			proxy_read_timeout 600;
+		}
+	}
+	
+	#前台搜索服务器
+	server {
+		listen 80;
+		server_name search.jt.com;
+		#charset koi8-r;
+		#access_log logs/host.access.log main;
+		
+		proxy_set_header X-Forwarded-Host $host;
+		proxy_set_header X-Forwarded-Server $host;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		
+		location / {
+			proxy_pass http://127.0.0.1:8081;
+			proxy_connect_timeout 600;
+			proxy_read_timeout 600;
+		}
+	}
+	#图片服务器
+	server {
+		listen 80;
+		server_name image.jt.com;
+		#charset koi8-r;
+		#access_log logs/host.access.log main;
+		
+		proxy_set_header X-Forwarded-Host $host;
+		proxy_set_header X-Forwarded-Server $host;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		
+		location / {
+			root d:\\jt-upload;
+		}
+	}
+
+启动：
+请勿双击.exe文件
+
+####第二天总结：
 1）商品管理
 商品关联商品描述信息，表设计将一张表的内容拆成 2 部分，
 商品基本信息表，描述表，
@@ -231,8 +564,99 @@ nginx用法：
 
 
 
+###第三天：
+
+####第三天草稿：
+
+商品规格
+1）记录商品规则，方便后期统计查询，还可以做同类商品的比较。
+2）分类动态，分类项动态，一个分类对应
+数据库存 json 串
+结合 EasyUI 动态添加树结构，绑定一个模版。
+
+模版怎么实现？
+某一个商品分类，只能有一个模版
+
+JsonView 工具
+用来查看 Json 结构
+在线版：
+http://www.bejson.com/jsonviewernew/
+
+RESTFul形式提交 id 参数
+var url = "/item/param/save/" + $("#itemParamAddTable [name=cid]").val();
+
+mybatis 它的删除，如果有多个关联对象，
+必须一一删除，这点就不如 hibernate 级联删除。
+但是mybatis性能相对高点
 
 
+搭建前台系统
+为了便于编码展示，不使用聚合工程，直接用一个web工程
+后台系统中springmvc是拦截所有，在前台系统中是*.html，
+伪静态，实质是jsp
+
+在Tomcat的web.xml中，mime标签配置了一些常用后缀的解析
+    <mime-mapping>
+        <extension>bmp</extension>
+        <mime-type>image/bmp</mime-type>
+    </mime-mapping>
+
+防止病毒项目：
+将所有的文件后缀修改，
+例如：将 js 改成 jsnu
+只要木马病毒会修改的文件后缀全部重新命名，
+之后只要修改Tomcat的conf/web.xml 中，
+mime类型都对应修改即可
+
+伪静态的目的，为了爬虫，爬虫只收集静态网站内容，
+将其抓取，分解
+
+eclipse 设置中的Validation可以关闭/开启文件校验
+
+
+####第三天总结：
+知识回顾：
+商品规格+搭建前台系统
+
+1）商品规格
+商品有一个特殊属性，两个目的，
+实现商品详细特性参数比较，
+这个参数根据不同的商品有不同的内容。
+[group,{name,value},...]
+
+2）规格参数模版
+形成规格参数模版，
+把程序写活了。
+
+3）新增商品/修改
+新增商品时，新增商品描述，新增规格参数。
+
+hibernate 构建对象关联关系，注意时刻绑定关系。
+hibernate 集中对象关联，面向对象。
+mybatis 全部打乱，分别处理，
+
+例如：保存商品，保存描述，保存规格参数，
+三个对象的外键必须设置，后期代码实现关系，
+外键变为了每个单独对象的属性。
+面向过程。
+
+4）级联删除
+hibernate 中非常简单，只需要配置上下级的关联关系，
+删除当前对象时，hibernate 会自动生成调用删除其他对象的 SQL 语句。
+
+框架的目的是解放编码，集中到业务处理上
+
+mybatis 级联删除不存在的，必须一个一个删除。
+需要开发人员自己控制。
+
+5）创建前台系统
+步骤：
+1. 创建 Maven 工程
+2. 继承父项目 jt-parent，依赖 jar 就都有了
+3. 没有持久层，修改数据库数据的地方，应该尽量的少，
+操作核心的地方尽量一个入口，方便进行监控
+P2P，钱，底层只负责出和进
+4. springmvc 映射 .html 伪静态，欺骗爬虫
 
 
 
