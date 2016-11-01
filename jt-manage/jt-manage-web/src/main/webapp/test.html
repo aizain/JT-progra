@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+    <script type="text/javascript" src="http://manage.jt.com/js/easyui-1.5/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+    	    $.get("http://manage.jt.com/test.json", function(data) {
+    	        console.log(data.key);
+    	    })
+    	})
+    </script>
+</body>
+</html>
