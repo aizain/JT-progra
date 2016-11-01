@@ -46,4 +46,11 @@ public class CallbackMappingJackson2HttpMessageConverter extends MappingJackson2
         
     }
     
+    public String getCallbackName() {
+        return callbackName;
+    }
+    
+    public void setCallbackName(String callbackName) {
+        this.callbackName = callbackName;
+    }
 }
