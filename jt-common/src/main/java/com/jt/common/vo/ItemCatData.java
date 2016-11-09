@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * 前台获取类目json串
+ * @author zain
+ * 16/11/06
+ */
 public class ItemCatData {
 
 	//序列化成json数据为u

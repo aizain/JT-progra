@@ -18,7 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 public class CallbackMappingJackson2HttpMessageConverter extends MappingJackson2HttpMessageConverter {
     
     // 做jsonp的支持的标识，在请求参数中加该参数
-    private String callbackName;
+    private String callbackName; //参数为callback=xxx
     
     @Override
     protected void writeInternal(Object obj, HttpOutputMessage outputMessage)

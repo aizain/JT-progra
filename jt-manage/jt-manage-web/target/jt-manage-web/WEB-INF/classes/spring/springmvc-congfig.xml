@@ -14,7 +14,16 @@
 		
 		
 	<!-- MVC注解驱动 -->
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven>
+		<!-- 采用自定义方案 -->
+		<mvc:message-converters>
+			<!-- 定义json转化器，支持json跨域 -->
+			<bean class="com.jt.common.spring.exetend.jackson.CallbackMappingJackson2HttpMessageConverter">
+				<!-- 跨域请求中的请求参数名 -->
+				<property name="callbackName" value="callback"></property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 	
 	<!-- 配置扫描器，使得@Controller注解生效 -->
 	<context:component-scan base-package="com.jt.manage.controller"/>

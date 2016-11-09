@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
+import com.jt.common.service.RedisService;
 import com.jt.common.vo.SysResult;
 import com.jt.manage.mapper.ItemDescMapper;
 import com.jt.manage.mapper.ItemMapper;
@@ -30,6 +31,9 @@ public class ItemService {
     private ItemDescMapper itemDescMapper;
     @Autowired
     private ItemParamItemMapper itemParamItemMapper;
+    @Autowired
+    private RedisService redisService;
+    
     
     /**
      * 保存一条数据
@@ -64,6 +68,9 @@ public class ItemService {
         itemParamItem.setUpdated(item.getUpdated());
         itemParamItem.setCreated(item.getCreated());
         itemParamItemMapper.insert(itemParamItem);
+        
+        // 将商品信息放入redis
+        redisService.set("item_" + item.getId(), item.getId() + "");
     }
 
     /**

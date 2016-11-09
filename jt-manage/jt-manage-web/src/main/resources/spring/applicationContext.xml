@@ -22,6 +22,8 @@
 		<property name="locations">
 			<list>
 				<value>classpath:jdbc.properties</value>
+				<value>classpath:env.properties</value>
+				<value>classpath:redis.properties</value>
 			</list>
 		</property>
 	</bean>
