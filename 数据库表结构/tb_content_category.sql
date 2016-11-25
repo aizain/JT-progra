@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50715
 File Encoding         : 65001
 
-Date: 2016-11-21 20:42:17
+Date: 2016-11-25 10:57:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,11 +35,11 @@ CREATE TABLE `tb_content_category` (
 -- Records of tb_content_category
 -- ----------------------------
 INSERT INTO `tb_content_category` VALUES ('1', '0', '京淘商城', '1', null, '1', '2016-11-12 20:37:41', '2016-11-12 20:37:44');
-INSERT INTO `tb_content_category` VALUES ('18', '16', '新建分类1', '1', null, '1', '2016-11-13 19:35:37', '2016-11-13 19:35:37');
-INSERT INTO `tb_content_category` VALUES ('19', '16', '新建分类22', '1', null, '0', '2016-11-13 19:36:15', '2016-11-13 19:36:15');
-INSERT INTO `tb_content_category` VALUES ('20', '18', '新建分类11', '1', null, '0', '2016-11-13 19:36:22', '2016-11-13 19:36:22');
-INSERT INTO `tb_content_category` VALUES ('21', '18', '新建分类1111', '1', null, '0', '2016-11-13 19:36:25', '2016-11-13 19:36:25');
-INSERT INTO `tb_content_category` VALUES ('22', '1', '新建分类1', '1', null, '1', '2016-11-21 20:36:07', '2016-11-21 20:36:07');
-INSERT INTO `tb_content_category` VALUES ('23', '22', '新建分类2', '1', null, '1', '2016-11-21 20:36:09', '2016-11-21 20:36:09');
-INSERT INTO `tb_content_category` VALUES ('24', '23', '新建分类3', '1', null, '0', '2016-11-21 20:36:11', '2016-11-21 20:36:11');
-INSERT INTO `tb_content_category` VALUES ('25', '22', '新建分类wqeqe', '1', null, '0', '2016-11-21 20:36:14', '2016-11-21 20:36:14');
+INSERT INTO `tb_content_category` VALUES ('2', '1', '首页', '1', null, '1', '2016-11-13 19:35:37', '2016-11-13 19:35:37');
+INSERT INTO `tb_content_category` VALUES ('8', '2', '广告位', '1', null, '1', '2016-11-13 19:36:15', '2016-11-13 19:36:15');
+INSERT INTO `tb_content_category` VALUES ('9', '8', '大广告位', '1', null, '0', '2016-11-13 19:36:22', '2016-11-13 19:36:22');
+INSERT INTO `tb_content_category` VALUES ('10', '8', '右上角小广告', '1', null, '0', '2016-11-13 19:36:25', '2016-11-13 19:36:25');
+INSERT INTO `tb_content_category` VALUES ('11', '2', '京淘快讯', '1', null, '0', '2016-11-21 20:36:07', '2016-11-21 20:36:07');
+INSERT INTO `tb_content_category` VALUES ('12', '8', '中间小广告', '1', null, '0', '2016-11-21 20:36:09', '2016-11-21 20:36:09');
+INSERT INTO `tb_content_category` VALUES ('13', '2', '生活的橱窗', '1', null, '0', '2016-11-21 20:36:11', '2016-11-21 20:36:11');
+INSERT INTO `tb_content_category` VALUES ('21', '1', '尾页', '1', null, '0', '2016-11-21 20:36:14', '2016-11-21 20:36:14');
