@@ -17,6 +17,10 @@
 	<mvc:annotation-driven>
 		<!-- 采用自定义方案 -->
 		<mvc:message-converters>
+			<!-- 定义文本转化器 -->
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg index="0" value="UTF-8"/>
+			</bean>
 			<!-- 定义json转化器，支持json跨域 -->
 			<bean class="com.jt.common.spring.exetend.jackson.CallbackMappingJackson2HttpMessageConverter">
 				<!-- 跨域请求中的请求参数名 -->

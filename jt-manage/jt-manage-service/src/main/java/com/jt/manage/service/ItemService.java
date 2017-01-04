@@ -109,9 +109,11 @@ public class ItemService {
         itemDescMapper.updateByPrimaryKeySelective(itemDesc);
         
         ItemParamItem itemParamItem = itemParamItemMapper.selectByPrimaryKey(itemParamId);
-        itemParamItem.setParamData(itemParams);
-        itemParamItem.setUpdated(itemDesc.getUpdated());
-        itemParamItemMapper.updateByPrimaryKeySelective(itemParamItem);
+        if(itemParamItem != null) {
+            itemParamItem.setParamData(itemParams);
+            itemParamItem.setUpdated(itemDesc.getUpdated());
+            itemParamItemMapper.updateByPrimaryKeySelective(itemParamItem);
+        }
         
         return SysResult.ok();
     }
@@ -148,6 +150,16 @@ public class ItemService {
      */
     public ItemDesc queryItemDesc(Long itemId) {
         return itemDescMapper.selectByPrimaryKey(itemId);
+    }
+
+    /**
+     * 获取商品对象
+     * 根据id
+     * @param id
+     * @return
+     */
+    public Item get(Long id) {
+        return itemMapper.selectByPrimaryKey(id);
     }
     
 }

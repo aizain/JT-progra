@@ -35,11 +35,15 @@
     <div id="o-slide">
     <div class="slide" id="slide">
         <script type="text/javascript">
+        // *注：页面貌似用ext写的，不好补全，就不再写前台页面了
+        // 重点还是在架构、java代码上
+        
+        
         	;(function(cfg, doc) {
         	    if(!cfg.DATA_MSlide) {
         	        cfg.DATA_MSlide=[];
         	    }
-        	    var data = $(indexAD1);
+        	    var data = $(indexAD1); // 大广告位 JSTL，在后台组织json串，定义一个变量indexAD1
         	    
         	    cfg.DATA_MSlide = data;
         	    
@@ -195,8 +199,30 @@
     	    }
     	});
     </script>
-    
     </div>
+    <div class="m fr da0x70" clstag="homepage|keycount|home2013|10a">
+        <script>
+        	// 右上方广告位
+        	(function() {
+        	   var data = [
+        	               	{
+        	               	    "width" : 310,
+            	               	"height" : 70,
+            	               	"src" : "",
+            	               	"href" : "",
+            	               	"alt" : "",
+            	               	"widthB" : "",
+            	               	"heightB" : "",
+            	               	"srcB" : "",
+        	               	}
+        	               ]; 
+        	   var ad = pageConfig.FN_GetRandomData(data);
+        	   ad = pageConfig.FN_GetCompatibleData(ad);
+        	   document.write("<a></a>");
+        	}) ();
+        </script>
+    </div>
+    
     </div>
 </body>
 </html>

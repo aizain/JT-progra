@@ -7,18 +7,19 @@
             </ul>
         </div>
         <div data-options="region:'center'" style="padding:5px">
-            <table class="easyui-datagrid" id="contentList" data-option="toolbar:contentListToolbar,singleSelect:false,collapsible:true,pagination:true,method:'get',pagesize:20,url:'/content/query/list',queryParams:{categoryId:0}">
+            <table class="easyui-datagrid" id="contentList" 
+                   data-options="toolbar:contentListToolbar,singleSelect:false,collapsible:true,pagination:true,method:'get',pagesize:20,url:'/content/query/list',queryParams:{categoryId:0}">
                 <thead>
                     <tr>
                         <th data-options="field:'id',width:30">ID</th>
                         <th data-options="field:'title',width:120">内容标题</th>
                         <th data-options="field:'subTitle',width:100">内容子标题</th>
                         <th data-options="field:'titleDesc',width:120">内容描述</th>
-                        <th data-options="field:'url',width:60,align:'center',formatUrl">内容连接</th>
-                        <th data-options="field:'pic',width:50,align:'center',formatUrl">图片</th>
-                        <th data-options="field:'pic2',width:50,align:'center',formatUrl">图片2</th>
-                        <th data-options="field:'created',width:130,align:'center',formattDateTime">创建日期</th>
-                        <th data-options="field:'updated',width:130,align:'center',formatDateTime">更新日期</th>
+                        <th data-options="field:'url',width:60,align:'center'">内容连接</th><!-- ,formatUrl -->
+                        <th data-options="field:'pic',width:50,align:'center'">图片</th><!-- ,formatUrl -->
+                        <th data-options="field:'pic2',width:50,align:'center'">图片2</th><!-- ,formatUrl -->
+                        <th data-options="field:'created',width:130,align:'center'">创建日期</th><!-- ,formatDateTime -->
+                        <th data-options="field:'updated',width:130,align:'center'">更新日期</th><!-- ,formatDateTime -->
                     </tr>
                 </thead>
             </table>
@@ -46,12 +47,30 @@
     	    handler : function() {
     	        var node = $("#contentCategoryTree").tree("getSelected");
     	        if(!node || !$("#contentCategoryTree").tree("isLeaf", node.target)) {
-    	            alert('提示', '新增内容必须选择一个内容分类！');
+    	            alert('提示' + '新增内容必须选择一个内容分类！');
     	            return;
     	        }
+    	        TT.createWindow({
+        		    url : "/page/content-add"
+        		});
     	    }
-    	}, {
-	}];
+    		
+    	},{
+    	    text : "编辑",
+    	    iconCls : "icon-edit",
+    	    handler : function() {
+    	        var node = $("#contentCategoryTree").tree("getSelected");
+    	        if(!node || !$("#contentCategoryTree").tree("isLeaf", node.target)) {
+    	            alert('提示' + '新增内容必须选择一个内容分类！');
+    	            return;
+    	        }
+    	        TT.createWindow({
+        		    url : "/page/content-edit"
+        		});
+    	    }
+    	}
+    	
+	];
 
 	
 </script>
