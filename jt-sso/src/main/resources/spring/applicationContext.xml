@@ -21,12 +21,35 @@
 		<!-- 配置资源文件 -->
 		<property name="locations">
 			<list>
+				<value>classpath:jdbc.properties</value>
 				<value>classpath:env.properties</value>
+				<value>classpath:httpclient.properties</value>
+				<value>classpath:redis.properties</value>
 			</list>
 		</property>
 	</bean>
 
 	<!-- 扫描包 -->
 	<context:component-scan base-package="com.jt"/>
-
+	
+		<!-- 配置连接池 -->
+	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource">
+		<!-- 数据库驱动 -->
+		<property name="driverClass" value="${jdbc.driver}"/>
+		<!-- 相应驱动的jdbcUrl -->
+		<property name="jdbcUrl" value="${jdbc.url}"/>
+		<!-- 数据库的用户名 -->
+		<property name="username" value="${jdbc.username}"/>
+		<!-- 数据库的密码 -->
+		<property name="password" value="${jdbc.password}"/>
+		
+		<!-- 检查数据库连接池中空闲连接的间隔时间，单位是分，默认值：240，如果要取消则设置为0 -->
+		<property name="idleConnectionTestPeriod" value="60"/>
+		<!-- 连接池中来使用的连接最大存活时间，单位是分，默认值：60，如果要永远存活设置为0 -->
+		<property name="idleMaxAge" value="30"/>
+		<!-- 每个分区最大的连接数 -->
+		<property name="maxConnectionsPerPartition" value="150"/>
+		<!-- 每个分区最小的连接数 -->
+		<property name="minConnectionsPerPartition" value="5"/>
+	</bean>
 </beans>
