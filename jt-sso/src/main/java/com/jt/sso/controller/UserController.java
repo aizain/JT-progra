@@ -109,7 +109,7 @@ public class UserController {
      * @param ticket
      * @return
      */
-    @RequestMapping(value="/query/{ticket}", method=RequestMethod.POST)
+    @RequestMapping(value="/query/{ticket}", method=RequestMethod.GET)
     @ResponseBody
     public SysResult queryByTicket(@PathVariable("ticket") String ticket) {
         // 从redis中获取用户信息
