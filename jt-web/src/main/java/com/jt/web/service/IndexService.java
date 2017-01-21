@@ -1,5 +1,7 @@
 package com.jt.web.service;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +13,11 @@ import com.jt.common.spring.exetend.PropertyConfig;
 import com.jt.common.vo.EasyUIResult;
 import com.jt.web.pojo.Content;
 
+/**
+ * 首页服务
+ * @author zain
+ * 17/01/20
+ */
 @Service
 public class IndexService {
     
@@ -22,6 +29,14 @@ public class IndexService {
     @PropertyConfig
     private String INDEX_AD1; // 大广告位访问链接
     
+    @PropertyConfig
+    private String SSO_URL;
+    
+    /**
+     * 查询大广告位
+     * @return
+     */
+    @SuppressWarnings("unchecked")
     public String queryIndexAD1() {
         String json = "";
         StringBuilder builder = null;
@@ -67,5 +82,22 @@ public class IndexService {
         } 
         
         return builder.toString();
+    }
+    
+    /**
+     * 从redis中获取User对象
+     * 如果redis不存在，就从SSO中获取
+     * @param ticket
+     * @return
+     */
+    public String getUserByTicket(String ticket) {
+        String url = SSO_URL + "/user/query/" + ticket;
+        try {
+            String jsonUser = httpClientService.doGet(url);
+            return jsonUser;
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

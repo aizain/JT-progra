@@ -28,12 +28,12 @@
 				<!-- 第一个节点 -->
 				<bean class="redis.clients.jedis.JedisShardInfo">
 					<constructor-arg index="0" value="${redis.node1.ip}"/>
-					<constructor-arg index="1" value="${redis.node1.port}"/>
+					<constructor-arg index="1" value="${redis.node1.port}" type="int"/>
 				</bean>
 				<!-- 第二个节点 -->
 				<bean class="redis.clients.jedis.JedisShardInfo">
 					<constructor-arg index="0" value="${redis.node2.ip}"/>
-					<constructor-arg index="1" value="${redis.node2.port}"/>
+					<constructor-arg index="1" value="${redis.node2.port}" type="int"/>
 				</bean>
 			</list>
 		</constructor-arg>
