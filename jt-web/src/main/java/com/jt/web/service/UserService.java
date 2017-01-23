@@ -12,6 +12,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jt.common.service.HttpClientService;
 import com.jt.common.spring.exetend.PropertyConfig;
+import com.jt.common.vo.SysResult;
+import com.jt.web.pojo.User;
 
 /**
  * 登录相关服务
@@ -47,5 +49,30 @@ public class UserService {
         JsonNode data = jsonNode.get("data"); // 从jsonNode对象中获取data属性对象
         String ticket = data.asText(); // 转换为字符串
         return ticket;
+    }
+    
+    /**
+     * 
+     * @param user
+     * @return
+     * @throws IOException 
+     * @throws ParseException 
+     */
+    public SysResult doRegister(User user) throws ParseException, IOException {
+        // 访问SSO登录方法
+        String url = SSO_URL + "/user/register";
+        Map<String, String> params = new HashMap<>();
+        // params.put("user", MAPPER.writeValueAsString(user));
+        params.put("username", user.getUsername());
+        params.put("password", user.getPassword());
+        params.put("phone", user.getPhone());
+        
+        try {
+            httpClientService.doPost(url, params);
+            // httpClientService.doPostJson(url, MAPPER.writeValueAsString(user));
+            return SysResult.ok();
+        } catch(Exception e) {
+            return SysResult.build(201, "注册失败", user.getUsername() + "注册失败");
+        }
     }
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,7 @@ public class UserService {
     public SysResult register(User user) {
         user.setCreated(new Date());
         user.setUpdated(user.getCreated());
+        user.setPassword(DigestUtils.md5Hex(user.getPassword()));
         try {
             userMapper.insert(user);
             return SysResult.ok(true);
