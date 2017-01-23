@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jt.common.util.CookieUtils;
 import com.jt.common.vo.SysResult;
+import com.jt.web.pojo.User;
 import com.jt.web.service.UserService;
 
 /**
@@ -58,4 +59,28 @@ public class UserController {
         CookieUtils.setCookie(request, response, cookieName, ticket, 60*60*24*1000);
         return SysResult.ok();
     }
+    
+    /**
+     * 转向注册页面
+     * @return
+     */
+    @RequestMapping("/register")
+    public String register() {
+        return "register";
+    }
+    
+    /**
+     * 注册
+     * @param user
+     * @return
+     * @throws IOException 
+     * @throws ParseException 
+     */
+    @RequestMapping("/doRegister")
+    @ResponseBody
+    public SysResult doRegister(User user) throws ParseException, IOException {
+        return userService.doRegister(user);
+    }
+    
+    
 }
