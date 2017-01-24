@@ -14,6 +14,9 @@
         <dependent-module archiveName="jt-manage-pojo-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jt-manage-pojo/jt-manage-pojo">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="jt-common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jt-common/jt-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="jt-manage-web"/>
         <property name="java-output-path" value="/jt-manage-web/target/classes"/>
     </wb-module>

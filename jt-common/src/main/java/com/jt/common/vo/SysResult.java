@@ -75,7 +75,7 @@ public class SysResult {
 	public void setData(Object data) {
 		this.data = data;
 	}
-    public static <T> T formatToPojo(String jsonUser, Class<T> class1) {
+    public static <T> SysResult formatToPojo(String jsonUser, Class<T> class1) {
         // TODO Auto-generated method stub
         return null;
     }

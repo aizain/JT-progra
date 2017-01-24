@@ -76,6 +76,11 @@
       <artifactId>spring-aspects</artifactId>
       <version>${spring.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.amqp</groupId>
+      <artifactId>spring-rabbit</artifactId>
+      <version>1.4.0.RELEASE</version>
+    </dependency>
     
     <!-- Mybatis -->
     <dependency>
@@ -210,6 +215,14 @@
 	  <artifactId>hibernate-validator</artifactId>
 	  <version>5.1.3.Final</version>
 	</dependency>
+	
+	<!-- 消息队列 -->
+	<dependency>
+		<groupId>com.rabbitmq</groupId>
+		<artifactId>amqp-client</artifactId>
+		<version>3.5.1</version>
+	</dependency>
+	
   </dependencies>
   
   <build>

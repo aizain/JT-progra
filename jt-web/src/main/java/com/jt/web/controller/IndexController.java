@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,14 +41,15 @@ public class IndexController {
         // 存放当前用户信息,从cookie中拿出ticket，通过ticket去redis中获取当前user对象
         String cookieName = "JT_TICKET";
         String ticket = CookieUtils.getCookieValue(request, cookieName);
-        if(ticket != null) {
+        if (null !=ticket) {
             String jsonUser = service.getUserByTicket(ticket);
             // 获取当前用户对象
-            // TODO formatToPojo
-            User curUser = SysResult.formatToPojo(jsonUser, User.class);
-            model.addAttribute("curUser", curUser);
+            if (StringUtils.isNotEmpty(jsonUser)) {
+                // TODO formatToPojo
+                User curUser = (User) SysResult.formatToPojo(jsonUser, User.class).getData();
+                model.addAttribute("curUser", curUser);
+            }
         }
-        
         return "index";
     }
     

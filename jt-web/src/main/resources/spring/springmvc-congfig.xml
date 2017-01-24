@@ -43,5 +43,16 @@
 		<!-- 后缀 -->
 		<property name="suffix" value=".jsp"/>
 	</bean>
+	
+	<!-- 配置拦截器 -->
+	<mvc:interceptors>
+		<!-- 购物车拦截器 -->
+		<mvc:interceptor>
+			<!-- 拦截路径 -->
+			<mvc:mapping path="/cart/**"/>
+			<!-- 拦截器处理类 -->
+			<bean class="com.jt.web.interceptor.UserCartInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 		
 </beans>

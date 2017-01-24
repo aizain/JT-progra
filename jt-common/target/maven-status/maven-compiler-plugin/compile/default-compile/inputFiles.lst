@@ -10,6 +10,7 @@ D:\git\JT-progra\jt-common\src\main\java\com\jt\common\vo\ItemCatResult.java
 D:\git\JT-progra\jt-common\src\main\java\com\jt\common\spring\exetend\ConfigAnnotationBeanPostProcessor.java
 D:\git\JT-progra\jt-common\src\main\java\com\jt\common\util\IdleConnectionEvictor.java
 D:\git\JT-progra\jt-common\src\main\java\com\jt\common\service\PropertieService.java
+D:\git\JT-progra\jt-common\src\main\java\com\jt\common\util\CookieUtils.java
 D:\git\JT-progra\jt-common\src\main\java\com\jt\common\service\RedisService.java
 D:\git\JT-progra\jt-common\src\main\java\com\jt\common\vo\ItemCatData.java
 D:\git\JT-progra\jt-common\src\main\java\com\jt\common\spring\exetend\ExtendedPropertyPlaceholderConfigurer.java
