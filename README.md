@@ -12,7 +12,7 @@ Main页签：
 Base directory 选中jt-manage-web工程
 Goals 填写 tomcat7:run
 Source页签：
-Add 加入全部工程
+Add 加入工程
 其他一般都用默认的，jre用自己的
 
 ###1.京淘架构

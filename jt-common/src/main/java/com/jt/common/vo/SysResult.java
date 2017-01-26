@@ -1,5 +1,7 @@
 package com.jt.common.vo;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SysResult {
@@ -76,6 +78,10 @@ public class SysResult {
 		this.data = data;
 	}
     public static <T> SysResult formatToPojo(String jsonUser, Class<T> class1) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    public static <T> SysResult formatToList(String jsonData, Class<T> class1) {
         // TODO Auto-generated method stub
         return null;
     }

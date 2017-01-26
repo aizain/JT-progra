@@ -79,7 +79,7 @@
     <dependency>
       <groupId>org.springframework.amqp</groupId>
       <artifactId>spring-rabbit</artifactId>
-      <version>1.4.0.RELEASE</version>
+      <version>1.4.5.RELEASE</version>
     </dependency>
     
     <!-- Mybatis -->

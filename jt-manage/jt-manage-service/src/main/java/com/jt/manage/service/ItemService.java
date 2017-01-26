@@ -1,11 +1,16 @@
 package com.jt.manage.service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.jt.common.service.RedisService;
 import com.jt.common.vo.SysResult;
@@ -25,6 +30,7 @@ import com.jt.manage.pojo.ItemParamItem;
 @Service
 public class ItemService {
     
+    private static final ObjectMapper MAPPER = new ObjectMapper();
     @Autowired
     private ItemMapper itemMapper;
     @Autowired
@@ -33,7 +39,8 @@ public class ItemService {
     private ItemParamItemMapper itemParamItemMapper;
     @Autowired
     private RedisService redisService;
-    
+    @Autowired // spring 注入MQ模版
+    private RabbitTemplate rabbitTemplate;
     
     /**
      * 保存一条数据
@@ -115,6 +122,12 @@ public class ItemService {
             itemParamItemMapper.updateByPrimaryKeySelective(itemParamItem);
         }
         
+        // 修改成功后，设置发送商品修改的消息，消息应该存放什么内容？
+        // 将消息队列的内容设置为商品的id
+        String routingKey = "update"; // 路由key
+        // 发送消息到MQ服务器端
+        rabbitTemplate.convertAndSend(routingKey, item.getId());
+        
         return SysResult.ok();
     }
 
@@ -159,7 +172,31 @@ public class ItemService {
      * @return
      */
     public Item get(Long id) {
-        return itemMapper.selectByPrimaryKey(id);
+        Item item = null;
+        
+        // 先从缓存中，读取信息，如果缓存中不存在，则继续执行
+        String jsonData = redisService.get(id + "");
+        if (StringUtils.isNotEmpty(jsonData)) {
+            try {
+                // 将json串转换为java对象
+                item = MAPPER.readValue(jsonData, Item.class);
+                return item;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        // 从数据库进行读取
+        item = itemMapper.selectByPrimaryKey(id);
+        // 将商品信息进行缓存
+        // 将商品对象转换为json串
+        try {
+            redisService.set(id + "", MAPPER.writeValueAsString(item));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        
+        return item;
     }
     
 }

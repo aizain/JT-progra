@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.4.xsd">
+		
+	<!-- rabbitmq 配置文件 -->
+	
+	<!-- 定义RabbitMQ的连接工厂 -->
+	<rabbit:connection-factory id="connectionFactory"
+		host="${rabbit.ip}" port="${rabbit.port}"
+		username="${rabbit.username}" password="${rabbit.password}"
+		virtual-host="${rabbit.vhost}"/>
+		
+	<!-- MQ的管理，包括队列、交换器等 -->
+	<rabbit:admin connection-factory="connectionFactory"/>
+	
+	<!-- 定义消息队列 -->
+	<rabbit:queue name="jt-web.itemQueue" auto-declare="true"/>
+	
+	<!-- 定义交换器，并且完成队列和交换机的绑定 -->	
+	<rabbit:direct-exchange name="itemDirectExcahnge" auto-declare="true">
+		<rabbit:bindings>
+			<!-- 前台系统只接收商品更新的消息，路由key，监听用一个exchange时不能重复，必须唯一 -->
+			<rabbit:binding queue="jt-web.itemQueue" key="update"/>
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+	
+	<!-- 定义监听 -->
+	<rabbit:listener-container>
+		<rabbit:listener ref="rabbitService" method="update" queue-names="jt-web.itemQueue"/>
+	</rabbit:listener-container>
+</beans>

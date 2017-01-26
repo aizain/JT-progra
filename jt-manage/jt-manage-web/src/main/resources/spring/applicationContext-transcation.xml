@@ -42,6 +42,14 @@
 		<!-- 定义切面，所有的service的所有方法 -->
 		<aop:pointcut id="txPointcut" expression="execution(* com.jt.manage.service.*.*(..))"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+		
+		<!-- 定义数据源切面，-9999保证该切面优先级最高执行
+		<aop:aspect ref="dataSourceAspect" order="-9999">
+			<aop:before method="before" pointcut-ref="txPointcut"/>
+		</aop:aspect>-->
 	</aop:config>
-
+	
+	<!-- 定义AOP数据源切面
+	<bean class="com.jt.manage.datasource.DataSourceAspect" id="dataSourceAspect"></bean>
+	 -->
 </beans>

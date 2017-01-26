@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.4.xsd">
+		
+	<!-- rabbitmq 配置文件 -->
+	
+	<!-- 定义RabbitMQ的连接工厂 -->
+	<rabbit:connection-factory id="connectionFactory"
+		host="${rabbit.ip}" port="${rabbit.port}"
+		username="${rabbit.username}" password="${rabbit.password}"
+		virtual-host="${rabbit.vhost}"/>
+		
+	<!-- 定义Rabbit模版，指定连接工厂以及定义exchange -->
+	<rabbit:template id="amqpTemplate"
+		connection-factory="connectionFactory"
+		exchange="itemDirectExcahnge"/>
+		
+	<!-- MQ的管理，包括队列、交换器等 -->
+	<rabbit:admin connection-factory="connectionFactory"/>
+	
+	<!-- 定义交换器，自动声明，持久化 -->	
+	<rabbit:direct-exchange name="itemDirectExcahnge"
+		auto-declare="true"
+		durable="true"/>
+</beans>

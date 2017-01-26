@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.jt.cart.mapper.CartMapper">
+
+	<!-- 按用户id和商品的id来查询商品是否存在 -->
+	<select id="queryByUserIdItemId" parameterType="map" resultType="int">
+		SELECT count(1)
+		FROM tb_cart
+		WHERE user_id = #{userId}
+		AND item_id = #{itemId}
+	</select>
+	
+	<!-- 根据用户id和商品id，更新数据 -->
+	<update id="update" parameterType="Cart">
+		UPDATE tb_cart 
+		SET num = #{num}
+		WHERE user_id = #{userId}
+		AND item_id = #{itemId}
+	</update>
+	
+	<!-- 删除某个人的商品 -->
+	<delete id="deleteItem" parameterType="Cart">
+		DELETE FROM tb_cart
+		WHERE user_id = #{userId}
+		AND item_id = #{itemId}
+	</delete>
+</mapper>
